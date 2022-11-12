@@ -564,7 +564,7 @@ Hint: Some lines were ellipsized, use -l to show in full.
 
 <p>Запустим docker-compose.yml:</p>
 
-<pre>[root@dynweb docker]# docker compose -f ./docker-compose.yml up -d</pre>
+<pre>[root@dynweb docker]# <b>docker compose -f ./docker-compose.yml up -d</b></pre>
 
 <p>Откроем браузер и в адресной строке вводим <b><i>127.0.0.1:8081</i></b>:</p>
 
