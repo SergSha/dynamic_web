@@ -568,13 +568,13 @@ Hint: Some lines were ellipsized, use -l to show in full.
 
 <p>Откроем браузер и в адресной строке вводим <b><i>127.0.0.1:8081</i></b>:</p>
 
-<img src="./screens/Screenshot from 2022-11-13 00-07-53.png alt="wordpress" />
+<img src="./screens/Screenshot from 2022-11-13 00-07-53.png" alt="wordpress" />
 
 <p>Вводим в адресной строке <b><i>127.0.0.1:8082</i></b>:</p>
 
-<img src="./screens/Screenshot from 2022-11-13 00-08-09.png alt="django" />
+<img src="./screens/Screenshot from 2022-11-13 00-08-09.png" alt="django" />
 
 <p>И наконец в адресной строке вводим <b><i>127.0.0.1:8083</i></b>:</p>
 
-<img src="./screens/Screenshot from 2022-11-13 00-08-24.png alt="node.js" />
+<img src="./screens/Screenshot from 2022-11-13 00-08-24.png" alt="node.js" />
 
