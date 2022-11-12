@@ -339,14 +339,14 @@ server {
 <pre>[root@dynweb docker]# <b>mkdir ./django</b>
 [root@dynweb docker]#</pre>
 
-<p>Создадим файл requirements.txt:</p>
+<p>Создадим файл <i>requirements.txt</i>:</p>
 
 <pre>[root@dynweb docker]# <b>vi ./django/requirements.txt</b></p>
 Django==3.1
 gunicorn==20.0.4
 pytz==2020.1</pre>
 
-<p>Создадим файл manage.py:</p>
+<p>Создадим файл <i>manage.py</i>:</p>
 
 <pre>[root@dynweb docker]# <b>vi ./django/manage.py</b></p>
 #!/usr/bin/env python
@@ -371,10 +371,10 @@ if __name__ == '__main__':
 
 <p>В директории <i>django</i> создадим директорий <i>mysite</i>:</p>
 
-<pre>[root@dynweb docker]# mkdir ./django/mysite
+<pre>[root@dynweb docker]# <b>mkdir ./django/mysite</b>
 [root@dynweb docker]#</pre>
 
-<p>В этом директории создадим файл wsgi.py:</p>
+<p>В этом директории создадим файл <i>wsgi.py</i>:</p>
 
 <pre>[root@dynweb docker]# <b>vi ./django/mysite/wsgi.py</b></p>
 import os
@@ -382,7 +382,7 @@ from django.core.wsgi import get_wsgi_application
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mysite.settings')
 application = get_wsgi_application()</pre>
 
-<p>Создадим файл urls.py:</p>
+<p>Создадим файл <i>urls.py</i>:</p>
 
 <pre>[root@dynweb docker]# <b>vi ./django/mysite/urls.py</b></p>
 from django.contrib import admin
@@ -392,7 +392,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 ]</pre>
 
-<p>Создадим файл settings.py:</p>
+<p>Создадим файл <i>settings.py</i>:</p>
 
 <pre>[root@dynweb docker]# <b>vi ./django/mysite/settings.py</b></p>
 import os
@@ -478,7 +478,7 @@ STATIC_URL = '/static/'</pre>
     networks:
     - app-network</pre>
 
-<p>Сам Dockerfile:</p>
+<p>Сам <i>Dockerfile</i>:</p>
 
 <pre>[root@dynweb docker]# <b>vi ./django/Dockerfile</b>
 FROM python:3.8.3
@@ -498,7 +498,7 @@ ADD . ${APP_ROOT}</pre>
 <pre>[root@dynweb docker]# <b>mkdir ./node</b>
 [root@dynweb docker]#</pre>
 
-<p>Создадим файл test.js:</p>
+<p>Создадим файл <i>test.js</i>:</p>
 
 <pre>[root@dynweb docker]# <b>vi ./node/test.js</b>
 const http = require('http');
@@ -516,7 +516,7 @@ server.listen(port, hostname, () => {
 
 <p>Полученная структура каталогов и файлов:</p>
 
-<pre>[root@dynweb docker]# tree
+<pre>[root@dynweb docker]# <b>tree</b>
 .
 ├── django
 │   ├── Dockerfile
@@ -537,8 +537,8 @@ server.listen(port, hostname, () => {
 
 <p>Запускаем docker сервис:</p>
 
-<pre>[root@dynweb docker]# systemctl start docker
-[root@dynweb docker]# systemctl status docker
+<pre>[root@dynweb docker]# <b>systemctl start docker</b>
+[root@dynweb docker]# <b>systemctl status docker</b>
 ● docker.service - Docker Application Container Engine
    Loaded: loaded (/usr/lib/systemd/system/docker.service; disabled; vendor preset: disabled)
    Active: active (running) since Sat 2022-11-12 20:36:42 UTC; 4s ago
@@ -566,15 +566,15 @@ Hint: Some lines were ellipsized, use -l to show in full.
 
 <pre>[root@dynweb docker]# docker compose -f ./docker-compose.yml up -d</pre>
 
-<p>Откроем браузер и в адресной строке вводим <i>127.0.0.1:8081</i>:</p>
+<p>Откроем браузер и в адресной строке вводим <b><i>127.0.0.1:8081</i></b>:</p>
 
-<img src="./screns/Screenshot from 2022-11-13 00-07-53.png alt="wordpress" />
+<img src="./screens/Screenshot from 2022-11-13 00-07-53.png alt="wordpress" />
 
-<p>Вводим в адресной строке <i>127.0.0.1:8082</i>:</p>
+<p>Вводим в адресной строке <b><i>127.0.0.1:8082</i></b>:</p>
 
-<img src="./screns/Screenshot from 2022-11-13 00-08-09.png alt="wordpress" />
+<img src="./screens/Screenshot from 2022-11-13 00-08-09.png alt="django" />
 
-<p>И наконец в адресной строке вводим <i>127.0.0.1:8083</i>:</p>
+<p>И наконец в адресной строке вводим <b><i>127.0.0.1:8083</i></b>:</p>
 
-<img src="./screns/Screenshot from 2022-11-13 00-08-24.png alt="wordpress" />
+<img src="./screens/Screenshot from 2022-11-13 00-08-24.png alt="node.js" />
 
