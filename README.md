@@ -25,7 +25,7 @@
 
 <p>Формат сдачи ДЗ - vagrant + ansible</p>
 
-<h4>Создание стенда "Dynamic web"</h4>
+<h4>Создание стенда "Dynamic Web"</h4>
 
 <p>Содержимое Vagrantfile:</p>
 
@@ -586,15 +586,9 @@ Hint: Some lines were ellipsized, use -l to show in full.
 
 <p>После завершения открываем браузер и в адресной строке вводим:<br />
 
-<pre>localhost:8081</pre>
+<pre>localhost:8081     # откроется стартовая страница wordpress</pre>
 
-<p>Откроется стартовая страница wordpress;</p>
+<pre>localhost:8082     # откроется стартовая страница django</pre>
 
-<pre>localhost:8082</pre>
-
-<p>Откроется стартовая страница django;</p>
-
-<pre>localhost:8083</pre>
-
-<p>Откроется тестовая страница node.js.</p>
+<pre>localhost:8083     # откроется тестовая страница node.js</pre>
 
