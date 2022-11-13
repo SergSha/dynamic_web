@@ -1,2 +1,54 @@
 ---
 # tasks file for dynamicweb
+
+- name: Set mydistribution
+  set_fact:
+    mydistribution: "{{ 'rhel' if (ansible_distribution == 'Red Hat Enterprise Linux') else (ansible_distribution | lower) }}"
+
+- name: Add signing key
+  rpm_key:
+    key: "https://download.docker.com/linux/{{ mydistribution }}/gpg"
+    state: present
+
+- name: Add repository into yum.repos.d list
+  yum_repository:
+    name: docker
+    description: docker repository
+    baseurl: "https://download.docker.com/linux/{{ mydistribution }}/$releasever/$basearch/stable"
+    enabled: true
+    gpgcheck: true
+    gpgkey: "https://download.docker.com/linux/{{ mydistribution }}/gpg"
+
+- name: Install docker
+  yum:
+    name:
+    - docker-ce
+    - docker-ce-cli
+    - containerd.io
+    - docker-compose-plugin
+    state: latest
+    update_cache: true
+
+- name: Append user 'vagrant' to group 'docker'
+  user:
+    name: vagrant
+    groups: docker
+    append: yes
+
+- name: Start docker
+  service:
+    name: docker
+    state: started
+    enabled: true
+
+- name: Copy dynamic web project
+  copy:
+    src: docker
+    dest: "{{ ansible_user_dir }}"
+
+- name: Start docker-compose.yml
+  command: 
+    cmd: "docker compose -f {{ ansible_user_dir }}/docker/docker-compose.yml up -d"
+    chdir: "{{ ansible_user_dir }}/docker"
+
+

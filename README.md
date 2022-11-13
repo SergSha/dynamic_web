@@ -38,7 +38,7 @@ MACHINES = {
   :dynweb => {
     :box_name => "centos/7",
     :vm_name => "dynweb",
-    :ip => '192.168.30.10',
+    :ip => '192.168.50.10', # for ansible
     :mem => '2048',
     :cpus => '2'
   }
@@ -56,16 +56,16 @@ Vagrant.configure("2") do |config|
         vb.customize ["modifyvm", :id, "--memory", boxconfig[:mem]]
         vb.customize ["modifyvm", :id, "--cpus", boxconfig[:cpus]]
       end
-      if boxconfig[:vm_name] == "dynweb"
-        box.vm.provision "ansible" do |ansible|
-          ansible.playbook = "ansible/playbook.yml"
-          ansible.inventory_path = "ansible/hosts"
-          ansible.become = true
-          ansible.host_key_checking = "false"
-          ansible.limit = "all"
+#      if boxconfig[:vm_name] == "dynweb"
+#        box.vm.provision "ansible" do |ansible|
+#          ansible.playbook = "ansible/playbook.yml"
+#          ansible.inventory_path = "ansible/hosts"
+#          ansible.become = true
+#          ansible.host_key_checking = "false"
+#          ansible.limit = "all"
 #          ansible.verbose = "vvv"
-        end
-      end
+#        end
+#      end
     end
   end
 end</pre>
@@ -208,13 +208,13 @@ networks:
     restart: unless-stopped
     <i># Т.к. все запросы к приложениям будут проходить через nginx, пробросим под каждое приложение по порту.</i>
     ports:
-    - 8083:8081
-    - 8081:8082
-    - 8082:8083
+    - 8081:8081
+    - 8082:8082
+    - 8083:8083
     volumes:
     <i># будет использоваться php-fpm, необходимо смонтировать статические файлы wordpress:</i>
     - ./wordpress:/var/www/html
-    - ./nginx-conf:/etc/nginx/conf.d <i># монтируем конфиг</i>
+    - ./nginx:/etc/nginx/conf.d <i># монтируем конфиг</i>
     networks:
     - app-network
     depends_on: <i># nginx будет запускаться после всех приложений</i>
@@ -234,9 +234,9 @@ networks:
 <i># Сервер nginx для wordpress:</i>
 <i># Данный сервер отвечает за проксирование на wordpress через fastcgi</i>
 server {
-<i># Wordpress будет отображаться на 8083 порту хоста</i>
-        listen 8083;
-        listen [::]:8083;
+<i># Wordpress будет отображаться на 8081 порту хоста</i>
+        listen 8081;
+        listen [::]:8081;
         server_name localhost;
         index index.php index.html index.htm;
 <i># Задаем корень корень проекта, куда мы смонтировали статику wordpress</i>
@@ -275,9 +275,9 @@ upstream django {
     server app:8000;
 }
 server {
-<i># Django будет отображаться на 8081 порту хоста</i>
-        listen 8081;
-        listen [::]:8081;
+<i># Django будет отображаться на 8082 порту хоста</i>
+        listen 8082;
+        listen [::]:8082;
         server_name localhost;
         location / {
                 try_files $uri @proxy_to_app;
@@ -299,10 +299,10 @@ server {
 <p>Сервер nginx для node.js:</p>
 
 <pre><i># Сервер nginx для node.js:</i>
-<i># Node.js будет отображаться на 8082 порту хоста</i>
+<i># Node.js будет отображаться на 8083 порту хоста</i>
 server {
-        listen 8082;
-        listen [::]:8082;
+        listen 8083;
+        listen [::]:8083;
         server_name localhost;
         location / {
                 proxy_pass http://node:3000;
@@ -577,4 +577,24 @@ Hint: Some lines were ellipsized, use -l to show in full.
 <p>И наконец в адресной строке вводим <b><i>127.0.0.1:8083</i></b>:</p>
 
 <img src="./screens/Screenshot from 2022-11-13 00-33-24.png" alt="node.js" />
+
+<h4>Запуск стенда "Dynamic Web"</h4>
+
+<p>Запустить стенд с помощью следующей команды:</p>
+
+<pre>$ git clone https://github.com/SergSha/dynamic_web.git && cd ./dynamic_web/ && vagrant up</pre>
+
+<p>После завершения открываем браузер и в адресной строке вводим:<br />
+
+<pre>localhost:8081</pre>
+
+<p>Откроется стартовая страница wordpress;</p>
+
+<pre>localhost:8082</pre>
+
+<p>Откроется стартовая страница django;</p>
+
+<pre>localhost:8083</pre>
+
+<p>Откроется тестовая страница node.js.</p>
 
